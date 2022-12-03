@@ -2,46 +2,58 @@ const router = require("express").Router();
 const uploadTenant = require("../models/uploadTenant");
 const property = require("../models/Property");
 
-//CREATE 
+//CREATE
 router.post("/upload/:propertyid", async (req, res) => {
-    const propertyId = req.params.propertyid;
-    const uploadTenants = new uploadTenant(req.body);
+  const propertyId = req.params.propertyid;
+  const uploadTenants = new uploadTenant(req.body);
 
+  try {
+    const saveduploadTenants = await uploadTenants.save();
     try {
-        const saveduploadTenants = await uploadTenants.save();
-        try {
-            await property.findByIdAndUpdate(propertyId, {
-                $push: { tenantDetails: saveduploadTenants._id },
-            });
-            await property.findByIdAndUpdate(propertyId, {
-                $push: { tenantName: saveduploadTenants.username },
-            });
-        } catch (err) {
-            res.status(403).json(err)
-        }
-        res.status(200).json(saveduploadTenants);
+      await property.findByIdAndUpdate(propertyId, {
+        $push: { tenantDetails: saveduploadTenants._id },
+      });
+      await property.findByIdAndUpdate(propertyId, {
+        $push: { tenantName: saveduploadTenants.username },
+      });
     } catch (err) {
-        res.status(500).json(err);
+      res.status(403).json(err);
     }
+    res.status(200).json(saveduploadTenants);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//update
+router.put("/update/:tenantdetailsid", async (req, res) => {
+  const tenantDetailId = req.params.tenantdetailsid;
+  try {
+    await uploadTenant.findByIdAndUpdate(tenantDetailId, {
+      $set: req.body,
+    });
+    res.status(200).json("tenant details has been updated.");
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // delete
 router.delete("/:id/:propertyid", async (req, res) => {
-    const propertyId = req.params.propertyid;
+  const propertyId = req.params.propertyid;
+  try {
+    await uploadTenant.findByIdAndDelete(req.params.id);
     try {
-        await uploadTenant.findByIdAndDelete(req.params.id);
-        try {
-            await property.findByIdAndUpdate(propertyId, {
-                $pull: { tenantDetails: req.params.id },
-            });
-        } catch (err) {
-            res.status(403).json(err)
-        }
-        res.status(200).json("tenant details has been deleted.");
+      await property.findByIdAndUpdate(propertyId, {
+        $pull: { tenantDetails: req.params.id },
+      });
     } catch (err) {
-        res.status(500).json(err)
+      res.status(403).json(err);
     }
+    res.status(200).json("tenant details has been deleted.");
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
-
 
 module.exports = router;
