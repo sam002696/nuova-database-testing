@@ -11,6 +11,8 @@ router.post("/register", async (req, res) => {
       ...req.body,
       password: hashedPass,
     });
+
+    // const newUser = new User(req.body);
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
@@ -29,12 +31,13 @@ router.post("/login", async (req, res) => {
       if (!validated) {
         res.status(400).json("wrong credentials");
       } else {
-        // const { password, ...others } = user._doc;
         res.status(200).json(user);
       }
     } else {
       res.status(400).json("wrong email address");
     }
+
+    // res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
   }

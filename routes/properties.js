@@ -7,6 +7,7 @@ const User = require("../models/User");
 
 router.post("/", async (req, res) => {
   const newProperty = new Property(req.body);
+  console.log(req.body);
   try {
     const savedProperty = await newProperty.save();
     res.status(200).json(savedProperty);

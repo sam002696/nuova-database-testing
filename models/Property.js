@@ -1,63 +1,189 @@
 const mongoose = require("mongoose");
 
 const PropertySchema = new mongoose.Schema(
-    {
-        propertyType: {
-            type: String,
-            required: true
+  {
+    landlordInfo: {
+      landlordName: {
+        type: String,
+      },
+      landlordEmail: {
+        type: String,
+      },
+      landlordPhone: {
+        type: Number,
+      },
+    },
+    property: {
+      type: String,
+    },
+    propertyType: {
+      type: String,
+    },
+    propertyAddress: {
+      city: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      addressline1: {
+        type: String,
+      },
+      addressline2: {
+        type: String,
+      },
+      zipcode: {
+        type: Number,
+      },
+    },
+    propertyDetails: {
+      propertyFloor: {
+        type: String,
+      },
+      propertyEstimatedValue: {
+        type: Number,
+      },
+      livingArea: {
+        type: Number,
+      },
+      bedroom: {
+        type: Number,
+      },
+      bathroom: {
+        type: Number,
+      },
+      availibilityDate: {
+        type: Date,
+      },
+      propertyFurnished: {
+        type: String,
+      },
+      propertyAddress: {
+        type: String,
+      },
+      councilTaxBand: {
+        type: String,
+      },
+      petsPermission: {
+        type: String,
+      },
+      studentsAccept: {
+        type: String,
+      },
+      toLet: {
+        type: String,
+      },
+      rooms: {
+        type: [String],
+      },
+      roomsOther: {
+        type: String,
+      },
+      featuresAndAppliances: {
+        type: [String],
+      },
+      featuresAndAppliancesOther: {
+        type: String,
+      },
+      externalAreasFacilities: {
+        type: String,
+      },
+      sharedAreasFacilities: {
+        type: String,
+      },
+      excludedAreaFacilities: {
+        type: String,
+      },
+      permitSuppliedBy: {
+        type: String,
+      },
+      spaceNumber: {
+        type: Number,
+      },
+      permitsPerProperty: {
+        type: Number,
+      },
+      spaceLocation: {
+        type: String,
+      },
+      entryCode: {
+        type: String,
+      },
+      remoteFob: {
+        type: String,
+      },
+      suppliedBy: {
+        type: String,
+      },
+    },
+    units: [
+      {
+        baths: {
+          type: Number,
         },
-        propertyDesc: {
-            type: String,
-            required: true
+        beds: {
+          type: Number,
         },
-        street1: {
-            type: String,
-            required: true
+        marketRent: {
+          type: Number,
         },
-        street2: {
-            type: String,
-            required: false
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        country: {
-            type: String,
-            required: true
-        },
-        postCode: {
-            type: Number,
-            required: true
+        size: {
+          type: Number,
         },
         unitName: {
-            type: String,
-            required: true
+          type: String,
         },
-        Beds: {
-            type: Number,
-            required: true
+      },
+    ],
+    keyFeatures: [
+      {
+        label: {
+          type: String,
         },
-        Baths: {
-            type: Number,
-            required: true
+        value: {
+          type: String,
         },
-        Size: {
-            type: Number,
-            required: true
-        },
-        markedRent: {
-            type: String,
-            required: true
-        },
-        tenantDetails: {
-            type: [String],
-            ref: "uploadTenant"
-        },
-        tenantName: {
-            type: [String],
-            ref: "uploadTenant"
-        }
-    }, { timestamps: true })
+      },
+    ],
+    briefDesc: {
+      briefDesc: {
+        type: String,
+      },
+      comment: {
+        type: String,
+      },
+    },
+    images: {
+      pictureFirst: {
+        type: String,
+      },
+
+      pictureSecond: {
+        type: String,
+      },
+
+      pictureThird: {
+        type: String,
+      },
+
+      pictureFourth: {
+        type: String,
+      },
+    },
+
+    tenantDetails: {
+      type: [String],
+      ref: "uploadTenant",
+    },
+    tenantName: {
+      type: [String],
+      ref: "uploadTenant",
+    },
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Property", PropertySchema);

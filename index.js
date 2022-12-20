@@ -13,6 +13,7 @@ const currentJobRoute = require("./routes/currentJob");
 const BiddingRoute = require("./routes/bidding");
 const taskRoute = require("./routes/task");
 const taskDocumentsRoute = require("./routes/taskDocuments");
+const prospectsRoute = require("./routes/prospects");
 
 // express app initialization
 const app = express();
@@ -46,6 +47,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/tasks", taskRoute);
+app.use("/api/prospects", prospectsRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/properties", propertyRoute);
 app.use("/api/uploadTenants", uploadTenantRoute);
